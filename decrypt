@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+ciphertext = STDIN.read.chars
+key        = ARGV.last
+
+result = ''
+index  = 0
+
+next_key_char = -> do
+  char = key[index]
+  index += 1
+  index = 0 if index == key.length
+  char
+end
+
+begin
+  mask = (next_key_char.call + next_key_char.call).to_i(16)
+  char = (ciphertext.shift + ciphertext.shift).to_i(16)
+  result += (char ^ mask).chr 
+end until ciphertext.empty?
+
+print result

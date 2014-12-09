@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+plaintext = STDIN.read
+key       = ARGV.last
+
+result = ''
+index  = 0
+
+next_key_char = -> do
+  char = key[index]
+  index += 1
+  index = 0 if index == key.length
+  char
+end
+
+plaintext.chars.each do |char|
+  mask = (next_key_char.call + next_key_char.call).to_i(16)
+  result += (char.ord ^ mask).to_s(16)
+end
+
+print result
