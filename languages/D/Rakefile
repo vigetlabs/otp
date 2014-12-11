@@ -1,0 +1,21 @@
+namespace :D do
+  task :check do
+    `which dmd`
+
+    raise "Install a D compiler: `brew install dmd`" unless $?.success?
+  end
+
+  task :build => :check do
+    path = File.dirname(__FILE__)
+
+    `cd "#{path}"; dmd encrypt.d`
+    `cd "#{path}"; dmd decrypt.d`
+  end
+
+  task :clean do
+    path = File.dirname(__FILE__)
+    `cd "#{path}"; rm -f encrypt decrypt *.o`
+  end
+end
+
+task :default => :build
