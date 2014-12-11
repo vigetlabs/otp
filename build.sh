@@ -1,2 +1,2 @@
-ocamlc -o encrypt unix.cma encrypt.ml
-ocamlc -o decrypt unix.cma decrypt.ml
+ocamlfind ocamlc -package batteries,unix -linkpkg -o encrypt encrypt.ml
+ocamlfind ocamlc -package batteries,unix -linkpkg -o decrypt decrypt.ml
