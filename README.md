@@ -21,7 +21,16 @@ Decrypting is similar:
   * Convert both pairs to numbers and `XOR` them
   * Convert the resulting number to an ASCII character and print it out
 
-The test suite should hopefully make things a little more clear.
+You'll call your programs like this (`-n` so that `echo` doesn't stick a newline after your message):
+
+    $ echo -n 'secret message' | ./encrypt b33fd4d
+    c05ab7a956896dde5aa7a8529a28
+    $ echo -n c05ab7a956896dde5aa7a8529a28 | ./decrypt b33fd4d
+    secret message
+    $ echo -n 'secret message' | ./encrypt b33fd4d | ./decrypt b33fd4d
+    secret message
+
+The test suite should hopefully make things a little more clear. You can run it with `ruby otp_test.rb`.
 
 * * *
 
