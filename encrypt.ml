@@ -4,7 +4,7 @@ open Batteries
 let int_of_hex_chars c1 c2 = int_of_string (Printf.sprintf "0x%c%c" c1 c2)
 
 (* given a list of numbers, create strings of hex values and concatenate *)
-let hex_string nums = String.concat "" (List.map (Printf.sprintf "%x") nums)
+let hex_string_of_ints nums = String.concat "" (List.map (Printf.sprintf "%x") nums)
 
 (* get the mask value for the next two characters of the key *)
 let get_mask key =
@@ -19,4 +19,4 @@ let rec encrypt message key = match message with
 
 let key = BatDllist.of_list (String.to_list (Array.get Sys.argv 1)) in
   let message = String.to_list (BatIO.read_line BatIO.stdin) in
-  print_string (hex_string (encrypt message key))
+  print_string (hex_string_of_ints (encrypt message key))
