@@ -1,14 +1,13 @@
 open Batteries
 
 (* convert two hex chars into an int *)
-let int_from_hex_chars c1 c2 =
-  int_of_string ("0x" ^ (String.make 1 c1) ^ (String.make 1 c2))
+let int_of_hex_chars c1 c2 = int_of_string (Printf.sprintf "0x%c%c" c1 c2)
 
 (* get the mask value for the next two characters of the key *)
 let get_mask key =
   let c1 = BatDllist.get key in
   let c2 = BatDllist.get (BatDllist.next key) in
-  int_from_hex_chars c1 c2
+  int_of_hex_chars c1 c2
 
 (* given a list of numbers, create strings of hex values and concatenate *)
 let rec hex_string nums = match nums with
