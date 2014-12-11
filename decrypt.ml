@@ -16,7 +16,7 @@ let get_mask key =
 let rec decrypt ciphertext key = match ciphertext with
   | [] -> []
   | c1 :: c2 :: cs ->
-    ((int_of_hex_chars c1 c2) lxor (get_mask key)) :: decrypt cs (BatDllist.skip key 2)
+    (int_of_hex_chars c1 c2) lxor (get_mask key) :: decrypt cs (BatDllist.skip key 2)
   | _ :: [] -> failwith "Invalid ciphertext";;
 
 let key = BatDllist.of_list (String.to_list (Array.get Sys.argv 1)) in

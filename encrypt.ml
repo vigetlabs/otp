@@ -15,7 +15,7 @@ let get_mask key =
 (* convert the plaintext to int values representing the ciphertext *)
 let rec encrypt message key = match message with
   | [] -> []
-  | c :: cs -> ((Char.code c) lxor (get_mask key)) :: encrypt cs (BatDllist.skip key 2);;
+  | c :: cs -> (Char.code c) lxor (get_mask key) :: encrypt cs (BatDllist.skip key 2);;
 
 let key = BatDllist.of_list (String.to_list (Array.get Sys.argv 1)) in
   let message = String.to_list (BatIO.read_line BatIO.stdin) in
