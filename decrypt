@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+
+var decrypt = require('./lib/decrypt');
+var args    = process.argv.slice(2);
+var key     = args[0];
+
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+
+process.stdin.on('data', function(data) {
+  process.stdout.write(
+    decrypt(data, key)
+  );
+});
+
