@@ -1,20 +1,27 @@
 namespace :D do
+  def run_command(command)
+    path   = File.dirname(__FILE__)
+    output = `cd "#{path}"; #{command}`
+
+    raise "Command failed: '#{command}': #{output}" unless $?.success?
+  end
+
+  desc "Check to see if we can build the programs"
   task :check do
     `which dmd`
 
-    raise "Install a D compiler: `brew install dmd`" unless $?.success?
+    unless $?.success?
+      raise "Could not locate a suitable D compiler, please run `brew install dmd`"
+    end
   end
 
   task :build => :check do
-    path = File.dirname(__FILE__)
-
-    `cd "#{path}"; dmd encrypt.d`
-    `cd "#{path}"; dmd decrypt.d`
+    run_command(%(dmd -w encrypt.d encrypter.d utility.d key_parsing.d))
+    run_command(%(dmd -w decrypt.d decrypter.d utility.d key_parsing.d))
   end
 
   task :clean do
-    path = File.dirname(__FILE__)
-    `cd "#{path}"; rm -f encrypt decrypt *.o`
+    run_command(%(rm -f *.o encrypt decrypt))
   end
 end
 
