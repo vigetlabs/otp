@@ -30,7 +30,27 @@ You'll call your programs like this (`-n` so that `echo` doesn't stick a newline
     $ echo -n 'secret message' | ./encrypt b33fd4d | ./decrypt b33fd4d
     secret message
 
-The test suite should hopefully make things a little more clear. You can run it with `ruby otp_test.rb`.
+The test suite should hopefully make things a little more clear. To start:
+
+1. Create a directory based on the name of your implementation language (e.g. `languages/C`)
+2. Create a simple `Rakefile` that has, at a minimum, a `build` task within your language's namespace (e.g. `C:build`).  You should check the environment and fail fast if dependencies aren't met.
+3. Create your implementation and run `rake` from the project root.
+
+### Example Rakefile
+
+```ruby
+namespace :C do
+  task :check do
+    `which cc`
+    raise "Please ensure that you have a valid C compiler" unless $?.success?
+  end
+
+  task :build => :check
+    path = File.dirname(__FILE__)
+    `cd #{path}; make encrypt`
+  end
+end
+```
 
 * * *
 
