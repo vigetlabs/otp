@@ -1,0 +1,10 @@
+namespace :Matlab do
+  task :check do
+    `which matlab`
+    raise "No Matlab interpreter found" unless $?.success?
+  end
+
+  task :build => :check do
+    # Interpreted languages FTW
+  end
+end

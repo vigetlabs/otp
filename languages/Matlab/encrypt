@@ -1,0 +1,3 @@
+#!/bin/bash
+read in2
+echo -n $(matlab -nodesktop -nosplash -nojvm -r "try; encrypt('$1','$in2'); end; quit;" | sed -n '/encrypted/{n;n;p;}')
