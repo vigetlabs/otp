@@ -1,0 +1,10 @@
+namespace :Ruby do
+  task :check do
+    `which ruby`
+    raise "No Ruby interpreter found" unless $?.success?
+  end
+
+  task :build => :check do
+    # Interpreted languages FTW
+  end
+end
