@@ -1,7 +1,7 @@
 namespace :OCaml do
   task :clean do
     path = File.dirname(__FILE__)
-    `cd #{path}; rm encrypt; rm decrypt; rm *.cmi; rm *.cmo`
+    `cd #{path}; rm -f encrypt decrypt *.cmi *.cmo`
   end
 
   task :check do
@@ -32,7 +32,7 @@ namespace :OCaml do
 
   task :build => :check do
     path = File.dirname(__FILE__)
-    `cd #{path}; ocamlfind ocamlc -package batteries -linkpkg -o encrypt encrypt.ml` 
+    `cd #{path}; ocamlfind ocamlc -package batteries -linkpkg -o encrypt encrypt.ml`
     `cd #{path}; ocamlfind ocamlc -package batteries -linkpkg -o decrypt decrypt.ml`
   end
 end
