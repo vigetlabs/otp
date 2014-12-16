@@ -5,7 +5,7 @@ class OtpTest < MiniTest::Test
   include Open3
 
   def run_program(*commands, &block)
-    command = commands.map {|c| "#{ENV['PATH']}/#{c}" }.join(' | ')
+    command = commands.map {|c| "#{ENV['LANGUAGE_PATH']}/#{c}" }.join(' | ')
     popen2(command, &block)
   end
 

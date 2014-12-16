@@ -30,7 +30,7 @@ task :run do
       ruby_exec = `which ruby`.chomp
 
       print "    * Running tests..."
-      test_output = `PATH="./#{language_path}" "#{ruby_exec}" ./test/otp_test.rb`
+      test_output = `LANGUAGE_PATH="./#{language_path}" "#{ruby_exec}" ./test/otp_test.rb`
       if $?.success?
         puts "done."
       else
