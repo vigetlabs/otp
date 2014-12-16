@@ -25,4 +25,4 @@ namespace :D do
   end
 end
 
-task :default => :build
+task :default => 'D:build'
