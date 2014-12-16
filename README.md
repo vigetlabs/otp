@@ -45,7 +45,7 @@ namespace :C do
     raise "Please ensure that you have a valid C compiler" unless $?.success?
   end
 
-  task :build => :check
+  task :build => :check do
     path = File.dirname(__FILE__)
     `cd #{path}; make encrypt`
   end
