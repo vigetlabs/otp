@@ -17,7 +17,8 @@ class Encrypter : KeyParsing
     {
         char[2] buf;
         string  cipherText;
-        ubyte[] messageBytes = representation(message);
+
+        auto messageBytes = representation(message);
 
         foreach(b; messageBytes) {
             sformat(buf, "%02x", b ^ this.nextKeyByte);
