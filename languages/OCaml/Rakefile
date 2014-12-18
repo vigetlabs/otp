@@ -20,7 +20,7 @@ namespace :OCaml do
     `which ocamlfind`
 
     unless $?.success?
-      raise "ocamlfind not installed, please run `opam install Batteries`"
+      raise "ocamlfind not installed, please run `opam install ocamlfind`"
     end
 
     `ocamlfind query Batteries`
