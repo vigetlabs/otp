@@ -1,0 +1,28 @@
+namespace :Rust do
+  def run_command(command)
+    path   = File.dirname(__FILE__)
+    output = `cd "#{path}"; #{command}`
+
+    raise "Command failed: '#{command}': #{output}" unless $?.success?
+  end
+
+  desc "Check to see if we can build the programs"
+  task :check do
+    `which rustc`
+
+    unless $?.success?
+      raise "Could not locate a Rust compiler. Install one from http://www.rust-lang.org/install.html"
+    end
+  end
+
+  task :build => :check do
+    run_command(%(rustc encrypt.rs))
+    run_command(%(rustc decrypt.rs))
+  end
+
+  task :clean do
+    run_command(%(rm -f *.o encrypt decrypt))
+  end
+end
+
+task :default => 'Rust:build'
