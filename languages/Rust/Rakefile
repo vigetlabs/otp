@@ -21,7 +21,7 @@ namespace :Rust do
   end
 
   task :clean do
-    run_command(%(rm -f *.o encrypt decrypt))
+    run_command(%(rm -f encrypt decrypt))
   end
 end
 
