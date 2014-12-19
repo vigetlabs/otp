@@ -13,6 +13,11 @@ namespace :Rust do
     unless $?.success?
       raise "Could not locate a Rust compiler. Install one from http://www.rust-lang.org/install.html"
     end
+
+    version = `rustc --version`
+    unless version =~ /^rustc 0\.13\.0.*/
+      puts "\n################\nWARNING: Your version of the Rust compiler is possibly incompatible.\nThis Rust code was built for rustc version 0.13.0.\nYour version is: #{version}\n###############"
+    end
   end
 
   task :build => :check do
