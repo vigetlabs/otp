@@ -36,3 +36,5 @@ namespace :OCaml do
     `cd #{path}; ocamlfind ocamlc -package batteries -linkpkg -o decrypt decrypt.ml`
   end
 end
+
+task :default => 'OCaml:build'
