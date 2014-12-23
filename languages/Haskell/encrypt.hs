@@ -28,4 +28,4 @@ main :: IO ()
 main = do
   plaintext <- getLine
   args <- getArgs
-  putStr (hexStringOfInts (encrypt plaintext (head args) 0))
+  putStr $ hexStringOfInts $ encrypt plaintext (head args) 0

@@ -25,4 +25,4 @@ main :: IO ()
 main = do
   plaintext <- getLine
   args <- getArgs
-  putStr (map chr (decrypt plaintext (head args) 0))
+  putStr $ map chr $ decrypt plaintext (head args) 0
