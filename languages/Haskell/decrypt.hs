@@ -16,6 +16,7 @@ getMask key idx = intOfHexChars c1 c2
 decrypt ciphertext key idx = case ciphertext of
   [] -> []
   c1:c2:cs -> xor (intOfHexChars c1 c2) (getMask key idx) : decrypt cs key (idx + 2)
+  _:[] -> error "Invalid ciphertext"
 
 main = do
   plaintext <- getLine

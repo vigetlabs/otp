@@ -1,6 +1,5 @@
 import Data.Bits(xor)
 import Data.Char(ord)
-import Data.List(concat)
 import System.Environment(getArgs)
 import Text.Printf(printf)
 

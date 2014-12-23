@@ -14,8 +14,8 @@ namespace :Haskell do
 
   task :build => :check do
     path = File.dirname(__FILE__)
-    `cd #{path}; ghc --make encrypt`
-    `cd #{path}; ghc --make decrypt`
+    `cd #{path}; ghc -Wall --make encrypt`
+    `cd #{path}; ghc -Wall --make decrypt`
   end
 end
 
