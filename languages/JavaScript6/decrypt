@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+require("6to5/register")
+
+var Decryptor = require("./src/Decryptor");
+var key       = process.argv.slice(2)[0]
+
+process.stdin.setEncoding('utf8')
+process.stdin.resume()
+
+process.stdin.pipe(new Decryptor(key))
+             .pipe(process.stdout)

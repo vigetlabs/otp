@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "description": "An ES6 implementation of OTP",
+  "repository": {
+    "type": "git",
+    "url" :"https://github.com/vigetlabs/otp"
+  },
+  "readme": "../../README.md",
+  "scripts": {
+    "encrypt": "echo 'secret message' | ./encrypt b33fd4d",
+    "test": "echo 'secret message' | ./encrypt b33fd4d | ./decrypt b33fd4d"
+  },
+  "dependencies": {
+    "6to5": "latest"
+  }
+}
