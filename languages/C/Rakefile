@@ -1,0 +1,28 @@
+namespace :C do
+  def run_command(command)
+    path   = File.dirname(__FILE__)
+    output = `cd "#{path}"; #{command}`
+
+    raise "Command failed: '#{command}': #{output}" unless $?.success?
+  end
+
+  desc "Check to see if we can build the programs"
+  task :check do
+    `which cc`
+
+    unless $?.success?
+      raise "Could not locate a suitable C compiler"
+    end
+  end
+
+  task :build => :check do
+    run_command(%(cc -Wall -o encrypt encrypt.c convert.c input.c key.c))
+    run_command(%(cc -Wall -o decrypt decrypt.c convert.c input.c key.c))
+  end
+
+  task :clean do
+    run_command(%(rm -rf encrypt decrypt *.o *.dSYM))
+  end
+end
+
+task :default => 'C:build'
