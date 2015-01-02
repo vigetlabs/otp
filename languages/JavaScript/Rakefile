@@ -1,0 +1,20 @@
+namespace :JavaScript do
+  task :clean do
+  end
+
+  task :check do
+    `which npm`
+
+    unless $?.success?
+      raise "Could not locate a suitable JavaScript compiler, please run `brew install node`"
+    end
+  end
+
+  task :build => :check do
+    path = File.dirname(__FILE__)
+    `cd #{ path }; npm install`
+  end
+
+end
+
+task :default => 'JavaScript:build'

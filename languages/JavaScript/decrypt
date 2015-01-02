@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var decrypt = require('./lib/decrypt');
+var decrypt = require('./src/decrypt');
 var args    = process.argv.slice(2);
 var key     = args[0];
 

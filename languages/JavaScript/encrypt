@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var encrypt = require('./lib/encrypt');
+var encrypt = require('./src/encrypt');
 var args    = process.argv.slice(2);
 var key     = args[0];
 
