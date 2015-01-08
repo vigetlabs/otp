@@ -1,4 +1,3 @@
-//encrypt.go
 package main
 
 import (
@@ -6,49 +5,38 @@ import (
 	"io/ioutil"
 	"bytes"
 	"encoding/hex"
+	"otp/languages/Go/key"
 )
 
-var (
-	text	[]byte
-	key	string
-	err	error
-)
+func main() {
+	cipher	:= readStdin()
+	hexKey	:= key.NewHexKey(readKeyArg())
 
-func init() {
-	text, err = ioutil.ReadAll(os.Stdin)
+	var textBuf bytes.Buffer
+
+	for i := 0; i < len(cipher); i += 2 {
+		j := i + 2
+		cipherByte, _ := hex.DecodeString(string(cipher[i:j]))
+
+		mask := hexKey.NextByte()
+		char := cipherByte[0] ^ mask
+		textBuf.WriteByte(char)
+	}
+
+	os.Stdout.Write(textBuf.Bytes())
+}
+
+func readStdin() []byte {
+	message, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {
 		panic("Couldn't read STDIN, exiting.")
 	}
+	return message
+}
 
+func readKeyArg() string {
 	if len(os.Args) < 2 {
 		panic("Invalid number of arguments")
 	}
-	key = os.Args[1]
-}
-
-func main() {
-	key_index := 0
-
-	var outbuf bytes.Buffer
-
-	for i := 0; i < len(text); i += 2 {
-		//Cipher byte
-		j := i + 2
-		cipher, _ := hex.DecodeString(string(text[i:j]))
-
-		//Mask byte
-		var maskbuf bytes.Buffer
-
-		maskbuf.WriteByte(key[key_index])
-		key_index = (key_index + 1) % len(key)
-		maskbuf.WriteByte(key[key_index])
-		key_index = (key_index + 1) % len(key)
-
-		mask, _ := hex.DecodeString(maskbuf.String())
-
-		//Decoded byte
-		outbuf.WriteByte(cipher[0] ^ mask[0])
-	}
-
-	os.Stdout.Write(outbuf.Bytes())
+	return os.Args[1]
 }

@@ -1,4 +1,3 @@
-//encrypt.go
 package main
 
 import (
@@ -6,16 +5,17 @@ import (
 	"io/ioutil"
 	"bytes"
 	"encoding/hex"
+	"otp/languages/Go/key"
 )
 
 func main() {
 	message := readStdin()
-	hexKey	:= NewHexKey(readKeyArg())
+	hexKey	:= key.NewHexKey(readKeyArg())
 
 	var cryptbuf bytes.Buffer
 
 	for i := range message {
-		mask := hexKey.nextByte()
+		mask := hexKey.NextByte()
 		char := message[i] ^ mask
 		cryptbuf.WriteByte(char)
 	}
@@ -37,26 +37,4 @@ func readKeyArg() string {
 		panic("Invalid number of arguments")
 	}
 	return os.Args[1]
-}
-
-type HexKey struct {
-	Key	string
-	Index	int
-}
-
-func NewHexKey(key string) *HexKey {
-	return &HexKey{key, 0}
-}
-
-func (key *HexKey) nextByte() byte {
-	var nextByteBuf bytes.Buffer
-
-	nextByteBuf.WriteByte(key.Key[key.Index])
-	key.Index = (key.Index + 1) % len(key.Key)
-
-	nextByteBuf.WriteByte(key.Key[key.Index])
-	key.Index = (key.Index + 1) % len(key.Key)
-
-	mask, _ := hex.DecodeString(nextByteBuf.String())
-	return mask[0]
 }
