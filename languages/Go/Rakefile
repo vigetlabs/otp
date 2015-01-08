@@ -1,0 +1,17 @@
+namespace :Go do
+
+  task :check do
+    `which go`
+    raise "Please ensure that you have Go installed" unless $?.success?
+  end
+
+  task :clean do
+    `go clean`
+  end
+
+  task :build => :clean do
+    path = File.dirname(__FILE__)
+    `cd #{path}; go build -o encrypt ./encrypt.go`
+    `cd #{path}; go build -o decrypt ./decrypt.go`
+  end
+end
