@@ -8,44 +8,55 @@ import (
 	"encoding/hex"
 )
 
-var (
-	message	[]byte
-	key	string
-	err	error
-)
-
-func init() {
-	message, err = ioutil.ReadAll(os.Stdin)
-	if err != nil {
-		panic("Couldn't read STDIN, exiting.")
-	}
-
-	if len(os.Args) < 2 {
-		panic("Invalid number of arguments")
-	}
-	key = os.Args[1]
-}
-
 func main() {
-	key_index := 0
+	message := readStdin()
+	hexKey	:= NewHexKey(readKeyArg())
 
 	var cryptbuf bytes.Buffer
 
 	for i := range message {
-		// Get next mask
-		var maskbuf bytes.Buffer
-		maskbuf.WriteByte(key[key_index])
-		key_index = (key_index + 1) % len(key)
-		maskbuf.WriteByte(key[key_index])
-		key_index = (key_index + 1) % len(key)
-
-		mask, _ := hex.DecodeString(maskbuf.String())
-
-		// Encrypt character
-		char := message[i] ^ mask[0]
+		mask := hexKey.nextByte()
+		char := message[i] ^ mask
 		cryptbuf.WriteByte(char)
 	}
 
 	out := hex.EncodeToString(cryptbuf.Bytes())
 	os.Stdout.Write([]byte(out))
+}
+
+func readStdin() []byte {
+	message, err := ioutil.ReadAll(os.Stdin)
+	if err != nil {
+		panic("Couldn't read STDIN, exiting.")
+	}
+	return message
+}
+
+func readKeyArg() string {
+	if len(os.Args) < 2 {
+		panic("Invalid number of arguments")
+	}
+	return os.Args[1]
+}
+
+type HexKey struct {
+	Key	string
+	Index	int
+}
+
+func NewHexKey(key string) *HexKey {
+	return &HexKey{key, 0}
+}
+
+func (key *HexKey) nextByte() byte {
+	var nextByteBuf bytes.Buffer
+
+	nextByteBuf.WriteByte(key.Key[key.Index])
+	key.Index = (key.Index + 1) % len(key.Key)
+
+	nextByteBuf.WriteByte(key.Key[key.Index])
+	key.Index = (key.Index + 1) % len(key.Key)
+
+	mask, _ := hex.DecodeString(nextByteBuf.String())
+	return mask[0]
 }

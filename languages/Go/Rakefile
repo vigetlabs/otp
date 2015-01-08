@@ -1,3 +1,5 @@
+task :default => "Go:build"
+
 namespace :Go do
 
   task :check do
