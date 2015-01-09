@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"bytes"
 	"encoding/hex"
-	"otp/languages/Go/key"
+	"key"
 )
 
 func main() {

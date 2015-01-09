@@ -8,12 +8,13 @@ namespace :Go do
   end
 
   task :clean do
-    `go clean`
+    path = File.dirname(File.expand_path(__FILE__))
+    `cd #{path}; rm -f encrypt decrypt`
   end
 
-  task :build => :clean do
-    path = File.dirname(__FILE__)
-    `cd #{path}; go build -o encrypt encrypt.go`
-    `cd #{path}; go build -o decrypt decrypt.go`
+  task :build do
+    path = File.dirname(File.expand_path(__FILE__))
+    `export GOPATH=#{path}; cd #{path}; go build -o ./encrypt ./src/encrypt.go`
+    `export GOPATH=#{path}; cd #{path}; go build -o ./decrypt ./src/decrypt.go`
   end
 end
