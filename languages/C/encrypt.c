@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     char *cipher_byte;
 
     for (message_index = 0; message_index < message_length; message_index++) {
-        cipher_byte = binary_to_hex(message[message_index] ^ next_key_byte(key, key_length));
+        cipher_byte = decimal_to_hex(message[message_index] ^ next_key_byte(key, key_length));
 
         for (byte_index = 0; byte_index < 2; byte_index++) {
             cipher_text[cipher_index] = cipher_byte[byte_index];

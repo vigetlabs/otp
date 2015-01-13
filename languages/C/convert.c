@@ -30,9 +30,9 @@ short is_hex_key(char *key, int length)
     return is_hex;
 }
 
-// Convert a single hexadecimal to binary, assumes `char` is
+// Convert a single hexadecimal to decimal, assumes `char` is
 // a valid hexadecimal digit: 0-9, a-f, A-F
-int hex_digit_to_binary(char hex)
+int hex_digit_to_decimal(char hex)
 {
     char subtrahend = '0';
 
@@ -45,18 +45,18 @@ int hex_digit_to_binary(char hex)
     return hex - subtrahend;
 }
 
-// Convert a pair of hexadecimal digits to binary
-int hex_to_binary(char hex[])
+// Convert a pair of hexadecimal digits to decimal
+int hex_to_decimal(char hex[])
 {
     // TODO: access issues -- assumes array has 2 elements
-    int left  = hex_digit_to_binary(hex[0]) * 16,
-        right = hex_digit_to_binary(hex[1]);
+    int left  = hex_digit_to_decimal(hex[0]) * 16,
+        right = hex_digit_to_decimal(hex[1]);
 
     return left + right;
 }
 
-// Convert a binary number to a 2-digit hexadecimal string
-char *binary_to_hex(int number)
+// Convert a decimal number to a 2-digit hexadecimal string
+char *decimal_to_hex(int number)
 {
     char *hex = calloc(3, sizeof(char));
     snprintf(hex, 3, "%02x", number);

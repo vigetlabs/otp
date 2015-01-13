@@ -1,7 +1,7 @@
 #include "key.h"
 #include "convert.h"
 
-// For a given key, return a binary representation of the
+// For a given key, return a decimal representation of the
 // hexadecimal digit.  This returns a byte at a time and will
 // iterate through the key as many times as necessary.
 int next_key_byte(char *key, int key_length)
@@ -18,5 +18,5 @@ int next_key_byte(char *key, int key_length)
         key_index++;
     }
 
-    return hex_to_binary(buf);
+    return hex_to_decimal(buf);
 }

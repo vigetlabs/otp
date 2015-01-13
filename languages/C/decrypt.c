@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
                 buf[i] = ciphertext[ciphertext_index + i];
             }
 
-            message[message_index] = hex_to_binary(buf) ^ next_key_byte(key, key_length);
+            message[message_index] = hex_to_decimal(buf) ^ next_key_byte(key, key_length);
 
             message_index++;
         }
