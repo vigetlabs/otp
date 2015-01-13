@@ -47,6 +47,7 @@ int main(int argc, char *argv[])
 
     free(key);
     free(ciphertext);
+    free(message);
 
     return 0;
 }
