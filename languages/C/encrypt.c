@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     char *message = read_message_from(stdin);
 
     int message_length = strlen(message);
-    char *cipher_text  = calloc((message_length * 2) + 1, sizeof(char));
+    char *ciphertext  = calloc((message_length * 2) + 1, sizeof(char));
 
     int cipher_index = 0, message_index = 0, byte_index = 0;
     char *cipher_byte;
@@ -36,17 +36,17 @@ int main(int argc, char *argv[])
         cipher_byte = decimal_to_hex(message[message_index] ^ next_key_byte(key, key_length));
 
         for (byte_index = 0; byte_index < 2; byte_index++) {
-            cipher_text[cipher_index] = cipher_byte[byte_index];
+            ciphertext[cipher_index] = cipher_byte[byte_index];
             cipher_index++;
         }
 
         free(cipher_byte);
     }
 
-    printf("%s", cipher_text);
+    printf("%s", ciphertext);
 
     free(key);
-    free(cipher_text);
+    free(ciphertext);
 
     return 0;
 }
