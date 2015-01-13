@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     for (message_index = 0; message_index < message_length; message_index++) {
         cipher_byte = decimal_to_hex(message[message_index] ^ next_key_byte(key, key_length));
 
-        for (byte_index = 0; byte_index < 2; byte_index++) {
+        for (byte_index = 0; byte_index < strlen(cipher_byte); byte_index++) {
             ciphertext[cipher_index] = cipher_byte[byte_index];
             cipher_index++;
         }
