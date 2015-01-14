@@ -3,27 +3,25 @@
 use Bitwise
 
 defmodule OTP do
-  def int_of_hex_chars(c1, c2) do
+  def int_of_hex_chars([c1, c2]) do
     String.to_integer << c1, c2 >>, 16
   end
 
-  def get_mask(key, index) do
-    c1 = Enum.at(key, rem(index, length(key)))
-    c2 = Enum.at(key, rem(index + 1, length(key)))
-    int_of_hex_chars(c1, c2)
+  def get_mask(key) do
+    Enum.take(key, 2) |> int_of_hex_chars
   end
 
-  def decrypt([], _, _), do: []
-  def decrypt([ _ | [] ], _, _), do: (raise "Invalid ciphertext")
+  def decrypt([], _), do: []
+  def decrypt([ _ | [] ], _), do: (raise "Invalid ciphertext")
 
-  def decrypt([ c1, c2 | cs ], key, idx) do
-    [ int_of_hex_chars(c1, c2) ^^^ get_mask(key, idx) | decrypt(cs, key, idx + 2) ]
+  def decrypt([ c1, c2 | cs ], key) do
+    [ int_of_hex_chars([c1, c2]) ^^^ get_mask(key) | decrypt(cs, Stream.drop(key, 2)) ]
   end 
 end
 
-key = System.argv |> List.first |> to_char_list
+key = System.argv |> List.first |> to_char_list |> Stream.cycle
 
 IO.read(1000)
 |> to_char_list
-|> OTP.decrypt(key, 0)
+|> OTP.decrypt(key)
 |> IO.write
