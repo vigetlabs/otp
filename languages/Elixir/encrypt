@@ -1,0 +1,33 @@
+#!/usr/bin/env elixir
+
+use Bitwise
+
+defmodule OTP do
+  def int_of_hex_chars(c1, c2) do
+    String.to_integer << c1, c2 >>, 16
+  end
+
+  def hex_string_of_ints(ints) do
+    Enum.map ints, &(&1 |> Integer.to_string(16) |> String.downcase)
+  end
+
+  def get_mask(key, index) do
+    c1 = Enum.at(key, rem(index, length(key)))
+    c2 = Enum.at(key, rem(index + 1, length(key)))
+    int_of_hex_chars(c1, c2)
+  end
+
+  def encrypt([], _, _), do: []
+
+  def encrypt([ c | cs ], key, idx) do
+    [ c ^^^ get_mask(key, idx) | encrypt(cs, key, idx + 2) ]
+  end 
+end
+
+key = System.argv |> List.first |> to_char_list
+
+IO.read(:line)
+|> to_char_list
+|> OTP.encrypt(key, 0)
+|> OTP.hex_string_of_ints
+|> IO.write

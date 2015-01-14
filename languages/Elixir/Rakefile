@@ -1,0 +1,12 @@
+namespace :Elixir do
+  task :check do
+    `which elixir`
+    raise "No Elixir interpreter found" unless $?.success?
+  end
+
+  task :build => :check do
+    # Interpreted languages FTW
+  end
+end
+
+task :default => 'Elixir:build'
