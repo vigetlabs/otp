@@ -5,7 +5,7 @@ class Encryptor extends stream.Transform {
 
   constructor(key) {
     super()
-    this.key = key
+    this.mask = keyPair(key)
   }
 
   obfuscate(message, i = 0) {
@@ -16,7 +16,7 @@ class Encryptor extends stream.Transform {
 
     // Pull off two characters from the key and convert them to a hex number
     // (so '00' becomes 0, 'ff' becomes 255)
-    let pair = keyPair(this.key, i)
+    let pair = this.mask.next().value
 
     // XOR the results of the above and print out the resulting number in hex
     let result = (code ^ pair).toString(16)

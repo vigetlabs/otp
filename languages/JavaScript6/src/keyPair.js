@@ -1,7 +1,9 @@
-let keyAt = (string, i) => string[i % string.length]
+import forever from './forever'
 
-let keyPair = (key, i) => {
-  return parseInt(keyAt(key, i) + keyAt(key, i + 1), 16)
+export default function * (key) {
+  let mask = forever(key)
+
+  while (true) {
+    yield parseInt(mask.next().value + mask.next().value, 16)
+  }
 }
-
-export default keyPair
