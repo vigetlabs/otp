@@ -1,6 +1,6 @@
 import forever from './forever'
 
-export default function * (key) {
+export default function* keyPair (key) {
   let mask = forever(key)
 
   while (true) {
