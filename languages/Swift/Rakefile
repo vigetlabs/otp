@@ -1,0 +1,32 @@
+namespace :Swift do
+  def in_directory(dir=File.dirname(__FILE__))
+    Dir.chdir(dir) do |d|
+      yield d if block_given?
+    end
+  end
+
+  task :check do
+    ["swiftc", "xcrun"].each do |command|
+      `which #{command}`
+      raise "No #{command} found" unless $?
+    end
+  end
+
+  task :clean do
+    in_directory do
+      `rm -f encrypt decrypt main.swift`
+    end
+  end
+
+  task :build => :check do
+    sdk_path = `xcrun --show-sdk-path --sdk macosx`.chomp
+    in_directory do
+      ["encrypt", "decrypt"].each do |executable|
+        # Swift needs a 'main.swift' to make an executable
+        `cp #{executable}.swift main.swift`
+        `swiftc otp.swift main.swift  -emit-executable -sdk #{sdk_path} -o #{executable}`
+        File.chmod(0755, executable)
+      end
+    end
+  end
+end
