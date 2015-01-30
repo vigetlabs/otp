@@ -14,7 +14,7 @@ namespace :Swift do
 
   task :clean do
     in_directory do
-      `rm encrypt decrypt main.swift`
+      `rm -f encrypt decrypt main.swift`
     end
   end
 
