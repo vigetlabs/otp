@@ -1,7 +1,3 @@
-#!/usr/bin/env elixir
-
-use Bitwise
-
 defmodule OTP.Common do
   def key(argv) do
     argv |> List.first |> to_char_list |> Stream.cycle

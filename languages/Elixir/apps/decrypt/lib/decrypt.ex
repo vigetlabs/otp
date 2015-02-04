@@ -1,5 +1,3 @@
-#!/usr/bin/env elixir
-
 use Bitwise
 
 import OTP.Common
