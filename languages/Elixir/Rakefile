@@ -1,11 +1,20 @@
 namespace :Elixir do
+  task :clean do
+    path = File.dirname(__FILE__)
+    `cd #{path}; rm -rf _build encrypt decrypt`
+  end
+
   task :check do
     `which elixir`
     raise "No Elixir interpreter found" unless $?.success?
+
+    `which mix`
+    raise "Mix not found" unless $?.success?
   end
 
   task :build => :check do
-    # Interpreted languages FTW
+    path = File.dirname(__FILE__)
+    `cd #{path}; mix escript.build`
   end
 end
 

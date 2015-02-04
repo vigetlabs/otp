@@ -2,7 +2,7 @@
 
 use Bitwise
 
-defmodule OTP do
+defmodule Encrypt do
   def int_of_hex_chars([c1, c2]) do
     String.to_integer << c1, c2 >>, 16
   end
@@ -20,12 +20,14 @@ defmodule OTP do
   def encrypt([ c | cs ], key) do
     [ c ^^^ get_mask(key) | encrypt(cs, Stream.drop(key, 2)) ]
   end 
+
+  def main(argv) do
+    key = argv |> List.first |> to_char_list |> Stream.cycle
+
+    IO.read(:line)
+    |> to_char_list
+    |> encrypt(key)
+    |> hex_string_of_ints
+    |> IO.write
+  end
 end
-
-key = System.argv |> List.first |> to_char_list |> Stream.cycle
-
-IO.read(:line)
-|> to_char_list
-|> OTP.encrypt(key)
-|> OTP.hex_string_of_ints
-|> IO.write

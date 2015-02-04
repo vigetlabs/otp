@@ -1,3 +1,5 @@
+/encrypt
+/decrypt
 /_build
 /deps
 erl_crash.dump

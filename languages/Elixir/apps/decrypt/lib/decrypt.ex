@@ -2,7 +2,7 @@
 
 use Bitwise
 
-defmodule OTP do
+defmodule Decrypt do
   def int_of_hex_chars([c1, c2]) do
     String.to_integer << c1, c2 >>, 16
   end
@@ -17,11 +17,13 @@ defmodule OTP do
   def decrypt([ c1, c2 | cs ], key) do
     [ int_of_hex_chars([c1, c2]) ^^^ get_mask(key) | decrypt(cs, Stream.drop(key, 2)) ]
   end 
+
+  def main(argv) do
+    key = argv |> List.first |> to_char_list |> Stream.cycle
+
+    IO.read(1000)
+    |> to_char_list
+    |> decrypt(key)
+    |> IO.write
+  end
 end
-
-key = System.argv |> List.first |> to_char_list |> Stream.cycle
-
-IO.read(1000)
-|> to_char_list
-|> OTP.decrypt(key)
-|> IO.write

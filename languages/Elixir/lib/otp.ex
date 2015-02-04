@@ -1,2 +1,2 @@
-defmodule Otp do
+defmodule OTP do
 end
