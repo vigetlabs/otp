@@ -1,4 +1,0 @@
-Otp
-===
-
-** TODO: Add description **
