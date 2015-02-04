@@ -5,12 +5,7 @@ use Bitwise
 import OTP.Common
 
 defmodule Encrypt do
-  def hex_string_of_ints(ints) do
-    Enum.map ints, &(&1 |> Integer.to_string(16) |> String.downcase)
-  end
-
   def encrypt([], _), do: []
-
   def encrypt([ c | cs ], key) do
     [ c ^^^ get_mask(key) | encrypt(cs, Stream.drop(key, 2)) ]
   end 

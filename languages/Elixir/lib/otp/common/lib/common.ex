@@ -14,4 +14,8 @@ defmodule OTP.Common do
   def get_mask(key) do
     Enum.take(key, 2) |> int_of_hex_chars
   end
+
+  def hex_string_of_ints(ints) do
+    Enum.map ints, &(&1 |> Integer.to_string(16) |> String.downcase)
+  end
 end
