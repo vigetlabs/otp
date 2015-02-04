@@ -2,15 +2,9 @@
 
 use Bitwise
 
+import OTP.Common
+
 defmodule Decrypt do
-  def int_of_hex_chars([c1, c2]) do
-    String.to_integer << c1, c2 >>, 16
-  end
-
-  def get_mask(key) do
-    Enum.take(key, 2) |> int_of_hex_chars
-  end
-
   def decrypt([], _), do: []
   def decrypt([ _ | [] ], _), do: (raise "Invalid ciphertext")
 
@@ -19,11 +13,9 @@ defmodule Decrypt do
   end 
 
   def main(argv) do
-    key = argv |> List.first |> to_char_list |> Stream.cycle
-
     IO.read(1000)
     |> to_char_list
-    |> decrypt(key)
+    |> decrypt(key(argv))
     |> IO.write
   end
 end
