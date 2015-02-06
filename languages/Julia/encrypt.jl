@@ -1,0 +1,24 @@
+using Key
+using Input
+using Utility
+
+if (length(ARGS) != 1)
+  println("Usage: ./encrypt <key>")
+  exit(1)
+end
+
+if (!is_hex_string(ARGS[1]))
+  println("Key must be a hexadecimal string")
+  exit(2)
+end
+
+key, key_index      = ARGS[1], 1
+message, ciphertext = read_from(STDIN), ""
+
+for message_index = 1:endof(message)
+  byte, key_index = next_key_byte(key, key_index)
+
+  ciphertext *= hex(byte $ int(message[message_index]))
+end
+
+print(ciphertext)

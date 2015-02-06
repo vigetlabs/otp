@@ -1,0 +1,21 @@
+namespace :Julia do
+  desc "Check to see if we can build the programs"
+  task :check do
+    `which julia`
+
+    unless $?.success?
+      raise <<-EOF
+Could not locate a Julia interpreter, please run:
+  $ brew update
+  $ brew tap staticfloat/julia
+  $ brew install julia
+      EOF
+    end
+  end
+
+  task :build => :check do
+    # NOOP
+  end
+end
+
+task :default => 'Julia:build'

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+start_dir=`pwd`
+target_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+cd $target_dir
+
+julia encrypt.jl "$@"
+
+cd $start_dir
