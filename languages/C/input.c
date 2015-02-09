@@ -4,7 +4,7 @@
 
 // Read from the specified input stream until EOF and return
 // the contents
-char *read_message_from(FILE *stream)
+char *read_from(FILE *stream)
 {
     char *message = NULL, *tmp = NULL;
     char *buffer  = calloc(BUF_SIZE, sizeof(char));

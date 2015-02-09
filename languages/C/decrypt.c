@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     }
 
     // read message text from stdin
-    char *ciphertext       = read_message_from(stdin);
+    char *ciphertext = read_from(stdin);
 
     // cache `ciphertext_length` for later
     int  ciphertext_length = strlen(ciphertext);
@@ -48,7 +48,6 @@ int main(int argc, char *argv[])
     // iterators
     int ciphertext_index = 0, message_index = 0, i = 0, next_index = 0;
     char buf[2];
-
 
     // Iterate through the ciphertext 2 characters at a time
     for (ciphertext_index = 0; ciphertext_index < ciphertext_length; ciphertext_index+= 2) {

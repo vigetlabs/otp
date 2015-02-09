@@ -3,6 +3,6 @@
 
 #define BUF_SIZE 32
 
-char *read_message_from(FILE *stream);
+char *read_from(FILE *stream);
 
 #endif

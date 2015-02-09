@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     }
 
     // read message text from stdin
-    char *message = read_message_from(stdin);
+    char *message = read_from(stdin);
 
     // Cache `message_length` for later
     int message_length = strlen(message);
