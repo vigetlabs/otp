@@ -12,7 +12,7 @@ namespace :JavaScript6 do
 
   task :build => :check do
     path = File.dirname(__FILE__)
-    `cd #{ path }; npm install`
+    `cd #{ path }; npm install --quiet`
   end
 
 end
