@@ -22,7 +22,7 @@ class Decryptor extends stream.Transform {
   }
 
   _transform (chunk, encoding, done) {
-    var message = this.reveal(chunk.toString())
+    let message = this.reveal(chunk.toString())
 
     this.push(message)
 

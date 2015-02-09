@@ -23,7 +23,7 @@ class Encryptor extends stream.Transform {
   }
 
   _transform(chunk, encoding, done) {
-    var secret = this.obfuscate(chunk.toString())
+    let secret = this.obfuscate(chunk.toString())
 
     this.push(secret)
 
