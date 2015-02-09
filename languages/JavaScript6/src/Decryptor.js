@@ -8,9 +8,7 @@ class Decryptor extends stream.Transform {
     this.mask = keyPair(key)
   }
 
-  reveal(message, i = 0) {
-    let [ a, b, ...tail ] = message
-
+  reveal([ a, b, ...tail ]) {
     // Pull off two hex chars from the ciphertext & two from the key
     let code = parseInt(a + b, 16)
 
@@ -20,7 +18,7 @@ class Decryptor extends stream.Transform {
     // Convert the resulting number to an ASCII character and print it out
     let result = String.fromCharCode(pair)
 
-    return tail.length ? result + this.reveal(tail, i + 2) : result
+    return tail.length ? result + this.reveal(tail) : result
   }
 
   _transform (chunk, encoding, done) {

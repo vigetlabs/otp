@@ -8,9 +8,7 @@ class Encryptor extends stream.Transform {
     this.mask = keyPair(key)
   }
 
-  obfuscate(message, i = 0) {
-    let [ head, ...tail ] = message
-
+  obfuscate([ head, ...tail ]) {
     // Convert the character to its ASCII representation (so 'a' becomes 97)
     let code = head.charCodeAt()
 
@@ -21,7 +19,7 @@ class Encryptor extends stream.Transform {
     // XOR the results of the above and print out the resulting number in hex
     let result = (code ^ pair).toString(16)
 
-    return tail.length ? result + this.obfuscate(tail, i + 2) : result
+    return tail.length ? result + this.obfuscate(tail) : result
   }
 
   _transform(chunk, encoding, done) {
