@@ -6,14 +6,14 @@
 // the contents
 char *read_from(FILE *stream)
 {
-    char *message = NULL, *tmp = NULL;
-    char *buffer  = calloc(BUF_SIZE, sizeof(char));
+    char *input  = NULL, *tmp = NULL;
+    char *buffer = calloc(BUF_SIZE, sizeof(char));
 
     int buffer_index = 0,
         iteration    = 0; // keep track of loop iterations to grow our allocation
 
-    size_t message_index = 0,
-           chars_read    = 0;
+    size_t input_index = 0,
+           chars_read  = 0;
 
     while (1) {
         // Function signature:
@@ -24,24 +24,24 @@ char *read_from(FILE *stream)
 
         // allocate enough memory to store chars + NUL byte.  This ends up creating 1 more byte
         // than we need on every iteration, but it's not worth worrying about.
-        tmp = realloc(message, (BUF_SIZE * iteration) + (chars_read + 1));
+        tmp = realloc(input, (BUF_SIZE * iteration) + (chars_read + 1));
 
         if (tmp == NULL) {
-            // bad allocation, just return what we have of `message`
-            return message;
+            // bad allocation, just return what we have of `input`
+            return input;
         } else {
-            message = tmp;
+            input = tmp;
         }
 
         // Loop through all the characters in the buffer we just fetched from STDIN
-        // and append it to the message
+        // and append it to the input
         for (buffer_index = 0; buffer_index < chars_read; buffer_index++) {
-            message[message_index] = buffer[buffer_index];
-            message_index++;
+            input[input_index] = buffer[buffer_index];
+            input_index++;
         }
 
         // Ensure we NUL terminate the string -- `realloc` does not do this
-        message[message_index] = 0;
+        input[input_index] = 0;
 
         // Exit loop when we reach EOF, per manpage:
         //   The function fread() does not distinguish between end-of-file and error;
@@ -54,5 +54,5 @@ char *read_from(FILE *stream)
     // Free our buffer allocation, we no longer need it
     free(buffer);
 
-    return message;
+    return input;
 }
