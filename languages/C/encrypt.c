@@ -47,14 +47,14 @@ int main(int argc, char *argv[])
 
     // iterators
     int cipher_index = 0, message_index = 0, byte_index = 0;
-    char *cipher_byte;
+    char *cipher_byte = calloc(3, sizeof(char));
 
     for (message_index = 0; message_index < message_length; message_index++) {
         // Take the next char in the message message (`message[message_index]`) and XOR this with
         // the next byte in the key supplied in the commandline arguments.  Since ASCII chars are
         // stored as integers, you can XOR without conversion.  Convert the resulting decimal
-        // number into its hexadecimal equivalent.
-        cipher_byte = decimal_to_hex(message[message_index] ^ next_key_byte(key, key_length));
+        // number into its hexadecimal equivalent and store in `cipher_byte`.
+        decimal_to_hex(cipher_byte, message[message_index] ^ next_key_byte(key, key_length));
 
         // At this point, `cipher_byte` will be a NUL-terminated string of length 2, containing
         // the hexadecimal digits.  Append these characters to the end of `ciphertext`.
@@ -62,16 +62,13 @@ int main(int argc, char *argv[])
             ciphertext[cipher_index] = cipher_byte[byte_index];
             cipher_index++;
         }
-
-        // Since `cipher_byte` is allocated from the heap, we need to free this
-        // between iterations
-        free(cipher_byte);
     }
 
     // Print our ciphertext
     printf("%s", ciphertext);
 
     // Clean up allocated memory (though this would be returned to the OS after we exit)
+    free(cipher_byte);
     free(key);
     free(ciphertext);
     free(message);

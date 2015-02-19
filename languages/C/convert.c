@@ -56,10 +56,7 @@ int hex_to_decimal(char hex[])
 }
 
 // Convert a decimal number to a 2-digit hexadecimal string
-char *decimal_to_hex(int number)
+int decimal_to_hex(char *hex, int number)
 {
-    char *hex = calloc(3, sizeof(char));
-    snprintf(hex, 3, "%02x", number);
-
-    return hex;
+    return snprintf(hex, 3, "%02x", number);
 }
