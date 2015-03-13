@@ -1,21 +1,32 @@
 #!/usr/bin/env ruby
 
-plaintext = STDIN.read
-key       = ARGV.last
+require "contracts"
+include Contracts
 
-result = ''
-index  = 0
-
-next_key_char = -> do
-  char = key[index]
-  index += 1
-  index = 0 if index == key.length
-  char
+Contract String, String => Num
+def int_of_hex_chars(c1, c2)
+  (c1 + c2).to_i(16)
 end
 
-plaintext.chars.each do |char|
-  mask = (next_key_char.call + next_key_char.call).to_i(16)
-  result += (char.ord ^ mask).to_s(16)
+Contract ArrayOf[Num] => String
+def hex_string_of_ints(nums)
+  nums.map { |n| n.to_s(16) }.join
 end
 
-print result
+Contract Enumerator::Lazy => Num
+def get_mask(key)
+  int_of_hex_chars *key.first(2)
+end
+
+Contract ArrayOf[String], Enumerator::Lazy => ArrayOf[Num]
+def encrypt(plaintext, key)
+  return [] if plaintext.empty?
+
+  char = plaintext.first.ord ^ get_mask(key)
+  encrypt(plaintext.drop(1), key.drop(2)).unshift(char)
+end
+
+plaintext = STDIN.read.chars
+key       = ARGV.last.chars.cycle.lazy
+
+print hex_string_of_ints(encrypt(plaintext, key))

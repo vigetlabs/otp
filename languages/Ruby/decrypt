@@ -1,22 +1,28 @@
 #!/usr/bin/env ruby
 
-ciphertext = STDIN.read.chars
-key        = ARGV.last
+require "contracts"
+include Contracts
 
-result = ''
-index  = 0
-
-next_key_char = -> do
-  char = key[index]
-  index += 1
-  index = 0 if index == key.length
-  char
+Contract String, String => Num
+def int_of_hex_chars(c1, c2)
+  (c1 + c2).to_i(16)
 end
 
-begin
-  mask = (next_key_char.call + next_key_char.call).to_i(16)
-  char = (ciphertext.shift + ciphertext.shift).to_i(16)
-  result += (char ^ mask).chr 
-end until ciphertext.empty?
+Contract Enumerator::Lazy => Num
+def get_mask(key)
+  int_of_hex_chars *key.first(2)
+end
 
-print result
+Contract ArrayOf[String], Enumerator::Lazy => ArrayOf[Num]
+def decrypt(ciphertext, key)
+  return [] if ciphertext.empty?
+  raise "Invalid ciphertext" if ciphertext.size == 1
+
+  char = int_of_hex_chars(*ciphertext.first(2)) ^ get_mask(key)
+  decrypt(ciphertext.drop(2), key.drop(2)).unshift(char)
+end
+
+ciphertext = STDIN.read.chars
+key        = ARGV.last.chars.cycle.lazy
+
+print decrypt(ciphertext, key).map(&:chr).join
