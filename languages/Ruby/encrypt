@@ -3,6 +3,8 @@
 require "contracts"
 include Contracts
 
+Cycle = Enumerator::Lazy
+
 Contract String, String => Num
 def int_of_hex_chars(c1, c2)
   (c1 + c2).to_i(16)
@@ -13,17 +15,20 @@ def hex_string_of_ints(nums)
   nums.map { |n| n.to_s(16) }.join
 end
 
-Contract Enumerator::Lazy => Num
+Contract Cycle => Num
 def get_mask(key)
   int_of_hex_chars *key.first(2)
 end
 
-Contract ArrayOf[String], Enumerator::Lazy => ArrayOf[Num]
+Contract [], Cycle => []
 def encrypt(plaintext, key)
-  return [] if plaintext.empty?
+  []
+end
 
+Contract ArrayOf[String], Cycle => ArrayOf[Num]
+def encrypt(plaintext, key)
   char = plaintext.first.ord ^ get_mask(key)
-  encrypt(plaintext.drop(1), key.drop(2)).unshift(char)
+  [char] + encrypt(plaintext.drop(1), key.drop(2))
 end
 
 plaintext = STDIN.read.chars

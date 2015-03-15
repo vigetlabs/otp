@@ -3,23 +3,32 @@
 require "contracts"
 include Contracts
 
+Cycle = Enumerator::Lazy
+
 Contract String, String => Num
 def int_of_hex_chars(c1, c2)
   (c1 + c2).to_i(16)
 end
 
-Contract Enumerator::Lazy => Num
+Contract Cycle => Num
 def get_mask(key)
   int_of_hex_chars *key.first(2)
 end
 
-Contract ArrayOf[String], Enumerator::Lazy => ArrayOf[Num]
+Contract [], Cycle => []
 def decrypt(ciphertext, key)
-  return [] if ciphertext.empty?
-  raise "Invalid ciphertext" if ciphertext.size == 1
+  []
+end
 
+Contract [String], Cycle => nil
+def decrypt(ciphertext, key)
+  raise "Invalid ciphertext"
+end
+
+Contract ArrayOf[String], Cycle => ArrayOf[Num]
+def decrypt(ciphertext, key)
   char = int_of_hex_chars(*ciphertext.first(2)) ^ get_mask(key)
-  decrypt(ciphertext.drop(2), key.drop(2)).unshift(char)
+  [char] + decrypt(ciphertext.drop(2), key.drop(2))
 end
 
 ciphertext = STDIN.read.chars
