@@ -5,14 +5,14 @@ include Contracts
 
 Cycle = Enumerator::Lazy
 
-Contract String, String => Num
-def int_of_hex_chars(c1, c2)
-  (c1 + c2).to_i(16)
+Contract [String, String] => Num
+def int_of_hex_chars(chars)
+  chars.join.to_i(16)
 end
 
 Contract Cycle => Num
 def get_mask(key)
-  int_of_hex_chars *key.first(2)
+  int_of_hex_chars key.first(2)
 end
 
 Contract [], Cycle => []
@@ -27,7 +27,7 @@ end
 
 Contract ArrayOf[String], Cycle => ArrayOf[Num]
 def decrypt(ciphertext, key)
-  char = int_of_hex_chars(*ciphertext.first(2)) ^ get_mask(key)
+  char = int_of_hex_chars(ciphertext.first(2)) ^ get_mask(key)
   [char] + decrypt(ciphertext.drop(2), key.drop(2))
 end
 
