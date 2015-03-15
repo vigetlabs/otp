@@ -2,6 +2,9 @@ namespace :Ruby do
   task :check do
     `which ruby`
     raise "No Ruby interpreter found" unless $?.success?
+
+    output = `gem list contracts`
+    raise "Contracts gem not installed" unless output =~ /contracts/
   end
 
   task :build => :check do
