@@ -3,9 +3,10 @@
 require "contracts"
 include Contracts
 
+Char  = -> (c) { c.is_a?(String) && c.length == 1 }
 Cycle = Enumerator::Lazy
 
-Contract [String, String] => Num
+Contract [Char, Char] => Num
 def int_of_hex_chars(chars)
   chars.join.to_i(16)
 end
@@ -20,12 +21,12 @@ def decrypt(ciphertext, key)
   []
 end
 
-Contract [String], Cycle => nil
+Contract [Char], Cycle => nil
 def decrypt(ciphertext, key)
   raise "Invalid ciphertext"
 end
 
-Contract ArrayOf[String], Cycle => ArrayOf[Num]
+Contract ArrayOf[Char], Cycle => ArrayOf[Num]
 def decrypt(ciphertext, key)
   char = int_of_hex_chars(ciphertext.first(2)) ^ get_mask(key)
   [char] + decrypt(ciphertext.drop(2), key.drop(2))
