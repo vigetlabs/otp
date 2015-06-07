@@ -3,7 +3,7 @@ function encrypt(message, key) {
 
   return message.split('')
     .map(function(val) {
-      var h1, h1, asciiChar, hexChar;
+      var h1, h2, asciiChar, hexChar;
 
       // get the next two characters in the key
       h1 = keyChars.shift();
