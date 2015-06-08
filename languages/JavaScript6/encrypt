@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-require("6to5/register")
+require("babel/register")
 
 var Encryptor = require("./src/Encryptor");
 var key       = process.argv.slice(2)[0]

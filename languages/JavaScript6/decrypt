@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-require("6to5/register")
+require("babel/register")
 
 var Decryptor = require("./src/Decryptor");
 var key       = process.argv.slice(2)[0]

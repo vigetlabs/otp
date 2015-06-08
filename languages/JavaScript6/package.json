@@ -11,6 +11,6 @@
     "test": "echo 'secret message' | ./encrypt b33fd4d | ./decrypt b33fd4d"
   },
   "dependencies": {
-    "6to5": "latest"
+    "babel": "latest"
   }
 }
