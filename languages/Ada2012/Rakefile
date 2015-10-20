@@ -1,0 +1,27 @@
+namespace :Ada do
+  def run_command(command)
+    path   = File.dirname(__FILE__)
+    output = `cd "#{path}"; #{command}`
+
+    raise "Command failed: '#{command}': #{output}" unless $?.success?
+  end
+
+  desc "Check to see if we can build the programs"
+  task :check do
+    `which gprbuild`
+
+    unless $?.success?
+      raise "Could not find GPRbuild, please install a recent release of GNAT GPL or an Ada-enabled version of GCC"
+    end
+  end
+
+  task :build => :check do
+    run_command(%(gprbuild otp.gpr))
+  end
+
+  task :clean do
+    run_command(%(rm -f obj/*))
+  end
+end
+
+task :default => 'Ada:build'
