@@ -15,7 +15,6 @@ package body Encryption_Keys is
          end if;
       end loop;
 
-
       -- ...and that the length is even or only 1 (we should not accept incomplete bytes)
       if Lower_Input'Length mod 2 /= 0 then
          if Lower_Input'Length = 1 then
