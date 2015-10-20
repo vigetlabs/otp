@@ -1,4 +1,4 @@
--- This pakage enables raw byte manipulation
+-- This package enables raw byte manipulation
 package Bytes is
 
    -- We will perform bitwise boolean operations on ASCII character representations. For this, the proper tool is a modular byte.
