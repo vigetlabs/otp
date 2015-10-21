@@ -1,4 +1,6 @@
 with Ada.Text_IO;
+-- DEBUG : This is not standard Ada, but is required to achieve test compliance. See below.
+with GNAT.IO;
 
 package body ASCII_Handling is
 
@@ -17,7 +19,10 @@ package body ASCII_Handling is
 
    procedure Output_ASCII (Data : ASCII_Representation) is
    begin
-      Ada.Text_IO.Put (To_Character (Data));
+      -- DEBUG : This is standard Ada, but will cause trailing newlines in output
+      --    Ada.Text_IO.Put (To_Character (Data));
+      -- DEBUG : This is not standard Ada, but it will do what we want
+      GNAT.IO.Put (To_Character (Data));
    end Output_ASCII;
 
 end ASCII_Handling;

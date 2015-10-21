@@ -1,6 +1,8 @@
 with Ada.Strings.Fixed;
 with Ada.Strings.Maps.Constants;
 with Ada.Text_IO;
+-- DEBUG : This is not standard Ada, but is required to achieve test compliance. See below.
+with GNAT.IO;
 
 package body Hex_IO is
 
@@ -49,7 +51,10 @@ package body Hex_IO is
    procedure Output_Hex_Byte (Byte : Bytes.Unsigned_Byte) is
       Output : Hex_Byte := To_Hex_Byte (Byte);
    begin
-      Ada.Text_IO.Put (Output);
+      -- DEBUG : This is standard Ada, but will cause trailing newlines in output
+      --    Ada.Text_IO.Put (Output);
+      -- DEBUG : This is GNAT-specific, but will do what we want
+      GNAT.IO.Put (Output);
    end Output_Hex_Byte;
 
 end Hex_IO;
