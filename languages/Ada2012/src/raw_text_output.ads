@@ -10,6 +10,6 @@ package Raw_Text_Output is
 private
 
    package Text_Streams renames Ada.Text_IO.Text_Streams;
-   Internal_Stream : constant Text_Streams.Stream_Access := Text_Streams.Stream(Ada.Text_IO.Standard_Output);
+   Internal_Stream : constant Text_Streams.Stream_Access := Text_Streams.Stream (Ada.Text_IO.Standard_Output);
 
 end Raw_Text_Output;

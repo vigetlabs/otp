@@ -5,8 +5,8 @@ with Hex_IO;
 package body Encryption_Keys is
 
    function Decode_Key (Input : String) return Cyclical_Encryption_Key is
-      Lower_Input : String := Ada.Strings.Fixed.Translate (Input,
-                                                           Ada.Strings.Maps.Constants.Lower_Case_Map);
+      Lower_Input : constant String := Ada.Strings.Fixed.Translate (Input,
+                                                                    Ada.Strings.Maps.Constants.Lower_Case_Map);
    begin
       -- Validate the input hex string : check that it is solely composed of hexadecimal digits
       for Char of Lower_Input loop
@@ -32,7 +32,7 @@ package body Encryption_Keys is
       begin
          for Output_Index in Key.Data'Range loop
             declare
-               Input_Index : Natural := 2 * Output_Index + Lower_Input'First;
+               Input_Index : constant Natural := 2 * Output_Index + Lower_Input'First;
             begin
                Key.Data (Output_Index) := Hex_IO.To_Unsigned_Byte (Lower_Input (Input_Index .. Input_Index + 1));
             end;
@@ -44,7 +44,7 @@ package body Encryption_Keys is
 
    function Generate_Key_Byte (Input : in out Cyclical_Encryption_Key) return Bytes.Unsigned_Byte is
    begin
-      return Output : Bytes.Unsigned_Byte := Input.Data (Input.Offset) do
+      return Output : constant Bytes.Unsigned_Byte := Input.Data (Input.Offset) do
          Input.Offset := (Input.Offset + 1) mod Input.Data'Length;
       end return;
    end Generate_Key_Byte;

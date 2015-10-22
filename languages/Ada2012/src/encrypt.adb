@@ -10,8 +10,8 @@ procedure Encrypt is
 begin
    while not Ada.Text_IO.End_Of_File loop
       declare
-         Input_Byte : Unsigned_Byte := ASCII_Handling.Input_ASCII;
-         Key_Byte : Unsigned_Byte := Encryption_Keys.Generate_Key_Byte (Encryption_Key);
+         Input_Byte : constant Unsigned_Byte := ASCII_Handling.Input_ASCII;
+         Key_Byte : constant Unsigned_Byte := Encryption_Keys.Generate_Key_Byte (Encryption_Key);
       begin
          Hex_IO.Output_Hex_Byte (Input_Byte xor Key_Byte);
       end;

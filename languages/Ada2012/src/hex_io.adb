@@ -29,8 +29,8 @@ package body Hex_IO is
       -- Fetch two hexadecimal digits of input and convert it to lowercase
       Ada.Text_IO.Get (Input);
       declare
-         Lower_Input : String := Ada.Strings.Fixed.Translate (Input,
-                                                              Ada.Strings.Maps.Constants.Lower_Case_Map);
+         Lower_Input : constant String := Ada.Strings.Fixed.Translate (Input,
+                                                                       Ada.Strings.Maps.Constants.Lower_Case_Map);
       begin
          -- Check that the input is full of valid hexadecimal digits
          for Char of Lower_Input loop
@@ -48,7 +48,7 @@ package body Hex_IO is
    end Input_Hex_Byte;
 
    procedure Output_Hex_Byte (Byte : Bytes.Unsigned_Byte) is
-      Output : Hex_Byte := To_Hex_Byte (Byte);
+      Output : constant Hex_Byte := To_Hex_Byte (Byte);
    begin
       Raw_Text_Output.Write (Output);
    end Output_Hex_Byte;
