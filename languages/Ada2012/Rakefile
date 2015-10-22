@@ -1,4 +1,4 @@
-namespace :Ada do
+namespace :Ada2012 do
   def run_command(command)
     path   = File.dirname(__FILE__)
     output = `cd "#{path}"; #{command}`
@@ -24,4 +24,4 @@ namespace :Ada do
   end
 end
 
-task :default => 'Ada:build'
+task :default => 'Ada2012:build'
