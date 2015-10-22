@@ -1,0 +1,21 @@
+project Otp is
+
+   for Source_Dirs use ("src");
+   for Object_Dir use "obj";
+   for Exec_Dir use ".";
+   for Main use ("decrypt.adb", "encrypt.adb");
+
+   package Compiler is
+      for Default_Switches ("ada") use ("-gnatwah.k.s", "-gnato", "-gnata", "-gnat12", "-g", "-O3", "-gnatf", "-gnatyAbBefhiIklnOprStx", "-fstack-check");
+   end Compiler;
+
+   package Builder is
+      for Default_Switches ("ada") use ("-s", "-g", "-j8");
+   end Builder;
+
+   package Linker is
+      for Default_Switches ("ada") use ("-g");
+   end Linker;
+
+end Otp;
+

@@ -1,0 +1,4 @@
+# Ignore binary files
+obj/*
+encrypt
+decrypt
